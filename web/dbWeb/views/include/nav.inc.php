@@ -11,10 +11,32 @@
         </div>
         <div id = "navbar" class = "collapse navbar-collapse">
             <ul class = "nav navbar-nav navbar-right">
-                <li class = "active"><a href = "#">Home</a></li>
-                <li><a href = "#about" data-toggle="modal" data-target="#modalViewRegister">Register</a></li>
-                <li><a href = "#contact" data-toggle="modal" data-target="#modalViewLogin">Login</a></li>
+                <?php if ($isLogged) { ?>
+                    <li><a href = "#" onclick="logout()" id="logout">Logout</a></li>
+
+                <?php } else { ?>
+                    <li><a href = "#register" data-toggle="modal" data-target="#modalViewRegister">Register</a></li>
+                    <li><a href = "#login" data-toggle="modal" data-target="#modalViewLogin">Login</a></li>
+                <?php } ?>
+
             </ul>
         </div>
     </div>
 </nav>
+
+<script type="text/javascript">
+    function logout() {
+        $.ajax({
+            type: "POST",
+            url: "actions/User.php",
+            data: {
+                action: 'logout'
+            },
+            success: function ()
+            {
+                location.reload();
+            }
+        });
+    }
+
+</script>

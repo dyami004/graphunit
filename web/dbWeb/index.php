@@ -2,6 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <?php
+        include './actions/Session.php';
         include './views/include/head.inc.php';
         include './views/include/bootstrap.inc.php';
         ?>
@@ -20,7 +21,7 @@
                 ?>
             </div>
         </div>
-        
+
         <?php
         include './views/include/modalViews.inc.php';
         ?>

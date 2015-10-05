@@ -49,12 +49,27 @@ class User extends DatabaseManager {
         $fields = ['email', 'password'];
         $conditions = [$_POST['email'], $_POST['password']];
         $result = $this->select($fields, $conditions);
-        if(!empty($result)){
+        if (!empty($result)) {
+            session_start();
+            $_SESSION['userId'] = $result['0']['id'];
+            $_SESSION['firstName'] = $result['0']['firstName'];
+            $_SESSION['lastName'] = $result['0']['lastName'];
+            $_SESSION['email'] = $result['0']['email'];
             echo json_encode(true);
             return;
         }
-        
+
         echo json_encode(false);
+    }
+
+    /**
+     * Process of loging out a user 
+     * using the session_destroy()
+     */
+    public function logout() {
+        session_start();
+        session_destroy();
+        $_SESSION = array();
         
     }
 
@@ -67,5 +82,8 @@ switch ($_POST['action']) {
         break;
     case 'login':
         $user->login();
+        break;
+    case 'logout':
+        $user->logout();
         break;
 }

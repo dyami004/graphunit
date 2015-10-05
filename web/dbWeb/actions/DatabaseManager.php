@@ -1,5 +1,6 @@
 <?php
 
+require_once './config.php';
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -7,17 +8,12 @@
  */
 
 class DatabaseManager {
-
-    private $sever = "localhost";
-    private $username = "root";
-    private $password = "";
-    private $dbName = "graphunit";
     private $mysqli;
     private $tableName;
 
     public function __construct($tableName) {
         $this->tableName = $tableName;
-        $this->mysqli = new mysqli($this->sever, $this->username, $this->password, $this->dbName);
+        $this->mysqli = new mysqli(DB_SERVER, DB_USER, DB_PASSWORD, DB_SCHEMA_NAME);
         if ($this->mysqli->connect_errno) {
             printf("Connect failed: %s\n", $this->mysqli->connect_error);
             exit();
