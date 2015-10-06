@@ -3,27 +3,31 @@
     <head>
         <?php
         include './actions/Session.php';
-        include './views/include/head.inc.php';
-        include './views/include/bootstrap.inc.php';
+        include './views/include/index/head.inc.php';
+        include './views/include/index/bootstrap.inc.php';
         ?>
 
     </head>
     <body>
         <div class="wrapper" style="padding-bottom: 70px;">
             <?php
-            include './views/include/nav.inc.php';
+            include './views/include/index/nav.inc.php';
             ?>
         </div>
         <div class="container">
             <div class="jumbotron">
                 <?php
-                include './views/include/welcome.inc.php';
+                if (!$isLogged) {
+                    include './views/welcome.inc.php';
+                } else {
+                    include './views/management.inc.php';
+                }
                 ?>
             </div>
         </div>
 
         <?php
-        include './views/include/modalViews.inc.php';
+        include './views/include/user/modalViews.inc.php';
         ?>
     </body>
 </html>
