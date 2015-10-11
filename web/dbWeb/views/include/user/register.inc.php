@@ -1,7 +1,7 @@
 <h2 style="text-align: center;">Register User</h2>
 <div class="well">
     <form id="register" role="form" >
-        <div class="row">
+<!--        <div class="row">
             <div class="form-group">
                 <label for="firstName">First Name:</label>
                 <input name="firstName" class="form-control" id="firstName" />
@@ -12,7 +12,7 @@
                 <label for="lastName">Last Name:</label>
                 <input name="lastName" class="form-control" id="lastName"/>
             </div>
-        </div>
+        </div>-->
         <div class="row">
             <div class="form-group">
                 <label for="email">Email address:</label>

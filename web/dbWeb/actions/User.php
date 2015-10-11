@@ -1,6 +1,8 @@
 <?php
 
 require_once './DatabaseManager.php';
+require '../phpmailer/PHPMailerAutoload.php';
+require '../phpmailer/class.smtp.php';
 
 class User extends DatabaseManager {
 
@@ -15,7 +17,7 @@ class User extends DatabaseManager {
      * Update when a database is changed
      * @var type Array
      */
-    private $fields = ['firstName', 'lastName', 'email', 'password', 'amazon_turk_id'];
+    private $fields = ['email', 'password', 'amazon_turk_id'];
 
     public function __construct($tableName) {
         parent::__construct($tableName);
@@ -27,7 +29,7 @@ class User extends DatabaseManager {
      * in DatabaseManager
      */
     public function register() {
-        $data = [$_POST['firstName'], $_POST['lastName'], $_POST['email'], $_POST['password'], null];
+        $data = [$_POST['email'], $_POST['password'], null];
 
         $successful = $this->insert($this->fields, $data);
 
@@ -38,6 +40,49 @@ class User extends DatabaseManager {
         }
 
         echo json_encode($result);
+    }
+
+    /**
+     * Process of sending a password
+     * to a specified email
+     */
+    public function forgotPassword() {
+        $fields = ['email'];
+        $conditions = [$_POST['email']];
+        $result = $this->select($fields, $conditions);
+        if (!empty($result)) {
+            $mail = new PHPMailer();
+            $mail->Host = 'localhost';
+            $mail->From = "noreply@visunit.com";
+            $mail->FromName = "VisUnit Password Recovery";
+            $mail->Subject = "Here is your password";
+            $mail->MsgHTML("Prueba");
+
+            $mail->isSMTP();                                      // Set mailer to use SMTP
+            $mail->Host = 'localhost';  // Specify main and backup SMTP servers
+            $mail->SMTPAuth = true;                               // Enable SMTP authentication
+            $mail->Username = 'user@example.com';                 // SMTP username
+            $mail->Password = 'secret';                           // SMTP password
+            $mail->SMTPSecure = 'tls';                            // Enable TLS encryption, `ssl` also accepted
+            $mail->Port = 587;                                    // TCP port to connect to
+
+            $mail->setFrom('noreply@visunit.com', 'Mailer');
+            $mail->addAddress($_POST['email']);
+
+            $mail->isHTML(true);                                  // Set email format to HTML
+
+            $mail->Subject = 'Here is your password!';
+            $mail->Body = 'This is the HTML message body <b>in bold!</b>';
+
+            if ($mail->Send()) {
+                echo json_encode(true);
+            } else {
+                echo json_encode(false);
+                echo 'Mailer Error: ' . $mail->ErrorInfo;
+            }
+        } else {
+            echo json_encode(false);
+        }
     }
 
     /**
@@ -70,7 +115,6 @@ class User extends DatabaseManager {
         session_start();
         session_destroy();
         $_SESSION = array();
-        
     }
 
 }
@@ -85,5 +129,8 @@ switch ($_POST['action']) {
         break;
     case 'logout':
         $user->logout();
+        break;
+    case 'forgot':
+        $user->forgotPassword();
         break;
 }

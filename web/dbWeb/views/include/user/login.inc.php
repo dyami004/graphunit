@@ -13,6 +13,7 @@
                 <input name="passwordLogin"  type="password" class="form-control " id="passwordLogin" placeholder="Please enter a minimum 4 characters password" />
             </div>
         </div>
+        <a href="#" id="forgotPassword" onclick="forgotPassword()">Forgot Password?</a>
         <div class="form-group col-sm-offset-5">
             <button id="submitButtonLogin" disabled="disabled" type="submit" class="btn btn-primary">Login</button>
         </div>
@@ -40,7 +41,25 @@
             }
         });
     });
-    
+    function forgotPassword() {
+        $.ajax({
+            type: "POST",
+            url: "actions/User.php",
+            data: {
+                action: 'forgot',
+                email: $("#emailLogin").val()
+            },
+            success: function (data)
+            {
+                if (data === "true") {
+                    location.reload();
+                } else {
+                    alert("Email is not registered");
+                }
+            }
+        });
+    }
+
     $('#passwordLogin, #emailLogin').on('change keydown keyup', function () {
         if ($('#passwordLogin').val().length >= 4 && validateEmail($('#emailLogin').val())) {
             $('#submitButtonLogin').attr('disabled', false);

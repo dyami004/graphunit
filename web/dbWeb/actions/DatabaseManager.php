@@ -1,6 +1,6 @@
 <?php
 
-require_once './config.php';
+require_once '/config.php';
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -11,7 +11,7 @@ class DatabaseManager {
     private $mysqli;
     private $tableName;
 
-    public function __construct($tableName) {
+    protected function __construct($tableName) {
         $this->tableName = $tableName;
         $this->mysqli = new mysqli(DB_SERVER, DB_USER, DB_PASSWORD, DB_SCHEMA_NAME);
         if ($this->mysqli->connect_errno) {
@@ -31,7 +31,7 @@ class DatabaseManager {
      * @param type $data Data to be inserted
      * @return type If false, insert was unsuccessful
      */
-    public function insert($fields = array(), $data = array()) {
+    protected function insert($fields = array(), $data = array()) {
         if (empty($fields) || empty($data)) {
             die("SQL can not insert without data, fields or table.");
         }
@@ -56,6 +56,22 @@ class DatabaseManager {
 
         return $this->mysqli->query($sqlQuery);
     }
+    /**
+     * Delete an existing item in the database
+     * 
+     * @param type $id int in the same order as the database
+     * @return type If false, insert was unsuccessful
+     */
+    protected function delete($id) {
+        if (is_null($id)) {
+            return false;
+        }
+
+
+        $sqlQuery = "DELETE FROM `dataset` WHERE `id` = ".$id;
+
+        return $this->mysqli->query($sqlQuery);
+    }
 
     /**
      * Return one or multiple items from the database
@@ -64,10 +80,10 @@ class DatabaseManager {
      * @param type $conditions 0 or more conditions for the select
      * @return type array 
      */
-    public function select($fields = array(), $conditions = array()) {
+    protected function select($fields = array(), $conditions = array()) {
         $where = null;
 
-        if (!empty($fields) || !empty($conditions)) {
+        if (!empty($fields) && !empty($conditions)) {
             foreach ($fields as $key => $current) {
                 if ($key == 0) {
                     $where = " WHERE `".$current."` = '".$conditions[$key]."'";

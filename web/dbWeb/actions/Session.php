@@ -20,4 +20,3 @@ if (isset($_SESSION['userId'])) {
     $lastName = NULL;
     $email = NULL;
 }
-?>

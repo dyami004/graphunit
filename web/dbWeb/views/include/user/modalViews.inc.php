@@ -19,3 +19,10 @@
         ?>
     </div>
 </div>
+<div id = "editDataset" class = "modal fade" role = "dialog" style = "padding-top: 100px;">
+    <div class = "jumbotron col-sm-offset-5 col-md-3" style = "border-radius: 6px;">
+        <?php
+        include './views/include/managementTabs/editDataset.html';
+        ?>
+    </div>
+</div>
