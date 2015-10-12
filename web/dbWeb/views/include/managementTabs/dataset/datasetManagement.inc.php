@@ -9,8 +9,16 @@ require './actions/Dataset.php';
 $dataset = new Dataset(Dataset::$tableName, $userId);
 $result = $dataset->datasetManagerView();
 ?>
-<h2 class="text-center">Dataset Management  <button  class="btn btn-default text-right" data-toggle="modal" data-target="#modalViewLogin">Add Dataset</button></h2>
-
+<div class="container">
+ <div class="row">
+  <div class="col-md-6">
+   <h2>Dataset Management</h2>
+  </div>
+  <div class="col-md-6">
+   <button  class="btn btn-default text-right" data-toggle="modal" data-target="#modalViewLogin">Add Dataset</button>
+  </div>
+ </div>
+</div>
 <div class="container">
     <table class="table table-bordered table-hover">
         <thead>
