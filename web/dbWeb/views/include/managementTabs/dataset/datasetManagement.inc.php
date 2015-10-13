@@ -9,7 +9,7 @@ require './actions/Dataset.php';
 $dataset = new Dataset(Dataset::$tableName, $userId);
 $result = $dataset->datasetManagerView();
 ?>
-<h2 class="text-center">Dataset Management  <button  class="btn btn-default text-right" data-toggle="modal" data-target="#modalViewLogin">Add Dataset</button></h2>
+<h2 class="text-center">Dataset Management  <button  class="btn btn-primary text-right" data-toggle="modal" data-target="#modalViewLogin">Add Dataset</button></h2>
 
 <div class="container">
     <table class="table table-bordered table-hover">
@@ -41,7 +41,7 @@ $result = $dataset->datasetManagerView();
                             data-dataset-id="<?php echo $value['id']; ?>" 
                             data-dataset-name="<?php echo $value['name']; ?>" 
                             data-target="#editDataset">Edit</button>
-                    <button type="button" class="btn btn-default btn-xs" onclick="del(<?php echo $value['id']; ?>)">Delete</button>
+                    <button type="button" class="btn btn-danger btn-xs" onclick="del(<?php echo $value['id']; ?>)">Delete</button>
                 </td>
             </tr>
             <?php
