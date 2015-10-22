@@ -37,7 +37,8 @@ class Dataset extends DatabaseManager {
     public function datasetManagerView() {
         $fields = ['user_id'];
         $conditions = [$this->userId];
-        return $this->select($fields, $conditions);
+        $order = ['id DESC'];
+        return $this->select($fields, $conditions, $order);
     }
 
     /*

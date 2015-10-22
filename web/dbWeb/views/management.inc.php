@@ -30,6 +30,25 @@
 </div>
 
 <script type="text/javascript">
+    $(document).ready(function () {
+        var lastTab = $.cookie('last_tab');
 
+// if last seen tab was stored in cookie
+        if (typeof (lastTab) !== "undefined") {
+//remove active css class from all the unordered list items
+            $('ul.nav-tabs').children().removeClass('active');
+            $('a[href=' + lastTab + ']').parents('li:first').addClass('active');
+            $('div.tab-content').children().removeClass('active');
+            $(lastTab).addClass('active');
+        }
+    });
+
+// event to capture tab switch
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (event) {
+        event.preventDefault();
+//save the latest tab using a cookie:
+        $.cookie('last_tab', $(event.target).attr('href'));
+        console.log('last_tab ' + $.cookie('last_tab'));
+    });
 </script>
 

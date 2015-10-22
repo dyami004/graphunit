@@ -8,6 +8,7 @@ require_once '/config.php';
  */
 
 class DatabaseManager {
+
     private $mysqli;
     private $tableName;
 
@@ -56,6 +57,7 @@ class DatabaseManager {
 
         return $this->mysqli->query($sqlQuery);
     }
+
     /**
      * Delete an existing item in the database
      * 
@@ -68,7 +70,7 @@ class DatabaseManager {
         }
 
 
-        $sqlQuery = "DELETE FROM `dataset` WHERE `id` = ".$id;
+        $sqlQuery = "DELETE FROM `dataset` WHERE `id` = " . $id;
 
         return $this->mysqli->query($sqlQuery);
     }
@@ -78,22 +80,32 @@ class DatabaseManager {
      * 
      * @param type $fields Fields in same order as condition
      * @param type $conditions 0 or more conditions for the select
+     * @param type $order Order result by field/s.
      * @return type array 
      */
-    protected function select($fields = array(), $conditions = array()) {
+    protected function select($fields = array(), $conditions = array(), $order = array()) {
         $where = null;
 
         if (!empty($fields) && !empty($conditions)) {
             foreach ($fields as $key => $current) {
                 if ($key == 0) {
-                    $where = " WHERE `".$current."` = '".$conditions[$key]."'";
+                    $where = " WHERE `" . $current . "` = '" . $conditions[$key] . "'";
                     continue;
                 }
 
-                $where = $where." AND `".$current."` = '".$conditions[$key]."'";
+                $where = $where . " AND `" . $current . "` = '" . $conditions[$key] . "'";
             }
         }
-        $sqlQuery = "SELECT * FROM `" . $this->tableName . "`" . $where;
+        if (!empty($order)) {
+            foreach ($order as $key => $current) {
+                if ($key == 0) {
+                    $orderBy = " ORDER BY " . $current . "";
+                    continue;
+                }
+                $orderBy = $orderBy . ", `" . $current . "`";
+            }
+        }
+        $sqlQuery = "SELECT * FROM `" . $this->tableName . "`" . $where . "" . $orderBy;
 
         if ($result = $this->mysqli->query($sqlQuery)) {
             $arrayResult = array();
@@ -101,7 +113,6 @@ class DatabaseManager {
             while ($array = $result->fetch_array()) {
                 $arrayResult[] = $array;
             }
-
         }
         return $arrayResult;
     }

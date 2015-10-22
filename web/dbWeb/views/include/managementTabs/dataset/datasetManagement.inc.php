@@ -17,7 +17,7 @@ $result = $dataset->datasetManagerView();
             </div>
             <div class="col-md-3">
             </div>
-            <button  class="btn btn-default text-right" data-toggle="modal" data-target="#modalViewLogin">Add Dataset</button>
+            <button  class="btn btn-primary text-right" data-toggle="modal" data-target="#modalViewLogin">Add Dataset</button>
         </div>
     </div>
 
@@ -75,8 +75,7 @@ $result = $dataset->datasetManagerView();
                 success: function (data)
                 {
                     if (data === "true") {
-                        var hash = window.location.hash;
-                        hash && $('ul.nav a[href="' + hash + '"]').tab('show');
+                        location.reload();
                     } else {
                         alert("There was an error, please try again.");
                     }
@@ -84,24 +83,24 @@ $result = $dataset->datasetManagerView();
             });
 
         }
-        function edit(id) {
-            $.ajax({
-                type: "POST",
-                url: "actions/Dataset.php",
-                data: {
-                    action: 'edit',
-                    userId: userId,
-                    id: id
-                },
-                success: function (data)
-                {
-                    if (data === "true") {
-                    } else {
-                        alert("There was an error, please try again.");
-                    }
-                }
-            });
-        }
+//        function edit(id) {
+//            $.ajax({
+//                type: "POST",
+//                url: "actions/Dataset.php",
+//                data: {
+//                    action: 'edit',
+//                    userId: userId,
+//                    id: id
+//                },
+//                success: function (data)
+//                {
+//                    if (data === "true") {
+//                    } else {
+//                        alert("There was an error, please try again.");
+//                    }
+//                }
+//            });
+//        }
         function del(id) {
             $.ajax({
                 type: "POST",
@@ -115,9 +114,6 @@ $result = $dataset->datasetManagerView();
                 {
                     if (data === "true") {
                         location.reload();
-                        $(document).ready(function () {
-                            $('.nav-tabs a[href="#datasetManagementTab"]').tab('show');
-                        });
                     } else {
                         alert("There was an error, please try again.");
                     }
