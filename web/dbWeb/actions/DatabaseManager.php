@@ -70,7 +70,7 @@ class DatabaseManager {
         }
 
 
-        $sqlQuery = "DELETE FROM `dataset` WHERE `id` = " . $id;
+        $sqlQuery = "DELETE FROM `" . $this->tableName . "`WHERE `id` = " . $id;
 
         return $this->mysqli->query($sqlQuery);
     }
@@ -96,6 +96,9 @@ class DatabaseManager {
                 $where = $where . " AND `" . $current . "` = '" . $conditions[$key] . "'";
             }
         }
+        
+        $orderBy = null;
+        
         if (!empty($order)) {
             foreach ($order as $key => $current) {
                 if ($key == 0) {

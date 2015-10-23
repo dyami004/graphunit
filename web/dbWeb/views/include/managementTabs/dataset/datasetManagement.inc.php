@@ -59,30 +59,31 @@ $result = $dataset->datasetManagerView();
             ?>
         </table>
     </div>
+</div>
 
-    <script type="text/javascript">
-        var userId = <?php echo $userId; ?>;
-        function copy(name, path) {
-            $.ajax({
-                type: "POST",
-                url: "actions/Dataset.php",
-                data: {
-                    action: 'copy',
-                    userId: userId,
-                    name: name,
-                    path: path
-                },
-                success: function (data)
-                {
-                    if (data === "true") {
-                        location.reload();
-                    } else {
-                        alert("There was an error, please try again.");
-                    }
+<script type="text/javascript">
+    var userId = <?php echo $userId; ?>;
+    function copy(name, path) {
+        $.ajax({
+            type: "POST",
+            url: "actions/Dataset.php",
+            data: {
+                action: 'copy',
+                userId: userId,
+                name: name,
+                path: path
+            },
+            success: function (data)
+            {
+                if (data === "true") {
+                    location.reload();
+                } else {
+                    alert("There was an error, please try again.");
                 }
-            });
+            }
+        });
 
-        }
+    }
 //        function edit(id) {
 //            $.ajax({
 //                type: "POST",
@@ -101,23 +102,23 @@ $result = $dataset->datasetManagerView();
 //                }
 //            });
 //        }
-        function del(id) {
-            $.ajax({
-                type: "POST",
-                url: "actions/Dataset.php",
-                data: {
-                    action: 'delete',
-                    userId: userId,
-                    id: id
-                },
-                success: function (data)
-                {
-                    if (data === "true") {
-                        location.reload();
-                    } else {
-                        alert("There was an error, please try again.");
-                    }
+    function del(id) {
+        $.ajax({
+            type: "POST",
+            url: "actions/Dataset.php",
+            data: {
+                action: 'delete',
+                userId: userId,
+                id: id
+            },
+            success: function (data)
+            {
+                if (data === "true") {
+                    location.reload();
+                } else {
+                    alert("There was an error, please try again.");
                 }
-            });
-        }
-    </script>
+            }
+        });
+    }
+</script>

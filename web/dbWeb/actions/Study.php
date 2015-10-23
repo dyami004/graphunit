@@ -5,6 +5,12 @@ require_once '/DatabaseManager.php';
 require_once '/Session.php';
 
 class Study extends DatabaseManager {
+    
+    /*
+     * Current user id
+     * @var type int
+     */
+    private $userId;
 
     /**
      * Name of the table
@@ -19,17 +25,84 @@ class Study extends DatabaseManager {
      */
     private $fields = ['name', 'path', 'user_id'];
 
-    public function __construct($tableName) {
+    public function __construct($tableName, $userId) {
         parent::__construct($tableName);
+        $this->userId = $userId;
     }
+
     /*
-     * 
+     * Get all studies to populate list manager
      */
 
     public function studyManagerView() {
         $fields = ['user_id'];
-        $conditions = [];
-        return $this->select($fields, $conditions);
+        $conditions = [$this->userId];
+        $order = ['id DESC'];
+        return $this->select($fields, $conditions, $order);
     }
 
+    /*
+     * Delete an existing study
+     */
+
+    public function del() {
+        $successful = $this->delete($_POST['id']);
+
+        $result = true;
+
+        if (!$successful) {
+            $result = false;
+        }
+
+        echo json_encode($result);
+    }
+
+    /*
+     * Edit an existing Study
+     */
+
+    public function edit() {
+        $successful = $this->delete($_POST['id']);
+
+        $result = true;
+
+        if (!$successful) {
+            $result = false;
+        }
+
+        echo json_encode($result);
+    }
+
+    /*
+     * Copy an existing study
+     */
+
+    public function copy() {
+        $data = [$_POST['name'], $_POST['path'], $this->userId];
+        $successful = $this->insert($this->fields, $data);
+
+        $result = true;
+
+        if (!$successful) {
+            $result = false;
+        }
+
+        echo json_encode($result);
+    }
+
+}
+
+if(isset($_POST['action'])) {
+    $study = new Study(Study::$tableName, $_POST['userId']);
+    switch ($_POST['action']) {
+        case 'delete':
+            $study->del();
+            break;
+        case 'copy':
+            $study->copy();
+            break;
+        case 'edit':
+            $study->edit();
+            break;
+    }
 }

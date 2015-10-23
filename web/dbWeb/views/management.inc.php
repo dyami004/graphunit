@@ -48,7 +48,6 @@
         event.preventDefault();
 //save the latest tab using a cookie:
         $.cookie('last_tab', $(event.target).attr('href'));
-        console.log('last_tab ' + $.cookie('last_tab'));
     });
 </script>
 
