@@ -47,7 +47,7 @@ $result = $viewer->viewerManagerView();
                     </td>
                     <td class="text-right">
                         <button type="button" class="btn btn-default btn-xs" onclick="copyViewer('<?php echo $value['name']; ?>', '<?php echo $value['path'] ?>', '<?php echo $value['description']; ?>')">Copy</button>
-                        <button type="button" class="btn btn-default btn-xs" data-toggle="modal" 
+                        <button type="button" class="btn btn-default btn-xs" id="editViewerOpen" data-toggle="modal" 
                                 data-viewer-id="<?php echo $value['id']; ?>" 
                                 data-target="#editViewer">Edit</button>
                         <button type="button" class="btn btn-danger btn-xs" onclick="delViewer(<?php echo $value['id']; ?>)">Delete</button>

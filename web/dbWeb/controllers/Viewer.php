@@ -137,10 +137,10 @@ if(isset($_POST['action'])) {
             $viewer->edit();
             break;
         case 'editInfo':
-            $dataset->editInfo();
+            $viewer->editInfo();
             break;
         case 'add':
-            $dataset->add();
+            $viewer->add();
             break;
     }
 }
