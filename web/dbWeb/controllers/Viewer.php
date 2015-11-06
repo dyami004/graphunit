@@ -23,7 +23,7 @@ class Viewer extends DatabaseManager {
      * Update when a database is changed
      * @var type Array
      */
-    private $fields = ['name', 'path', 'user_id'];
+    private $fields = ['name', 'path', 'user_id', 'description'];
 
     public function __construct($tableName, $userId) {
         parent::__construct($tableName);
@@ -57,12 +57,14 @@ class Viewer extends DatabaseManager {
         echo json_encode($result);
     }
 
+
     /*
      * Edit an existing viewer
      */
 
     public function edit() {
-        $successful = $this->delete($_POST['id']);
+        $data = [$_POST['name'], null, $this->userId, isset($_POST['description']) ? $_POST['description'] : null];
+        $successful = $this->update($this->fields, $data);
 
         $result = true;
 
@@ -72,13 +74,27 @@ class Viewer extends DatabaseManager {
 
         echo json_encode($result);
     }
+    
+    /*
+     * Retrieve information to edit viewer
+     */
+    public function editInfo() {
+        $fields = ['id'];
+        $conditions = [$_POST['viewerId']];
+        $dataset = $this->select($fields, $conditions);
+
+        $data = array();
+        $data['name'] = $dataset[0]['name'];
+        $data['description'] = $dataset[0]['description'];
+        echo json_encode($data);
+    }
 
     /*
      * Copy an existing viewer
      */
 
     public function copy() {
-        $data = [$_POST['name'], $_POST['path'], $this->userId];
+        $data = [$_POST['name'], null, $this->userId, $_POST['description'] ? $_POST['description'] : null ];
         $successful = $this->insert($this->fields, $data);
 
         $result = true;
@@ -90,6 +106,22 @@ class Viewer extends DatabaseManager {
         echo json_encode($result);
     }
 
+    /*
+     * Add a dataset
+     */
+
+    public function add() {
+        $data = [$_POST['name'], null, $this->userId, isset($_POST['description']) ? $_POST['description'] : null];
+        $successful = $this->insert($this->fields, $data);
+
+        $result = true;
+
+        if (!$successful) {
+            $result = false;
+        }
+
+        echo json_encode($result);
+    }
 }
 
 if(isset($_POST['action'])) {
@@ -103,6 +135,12 @@ if(isset($_POST['action'])) {
             break;
         case 'edit':
             $viewer->edit();
+            break;
+        case 'editInfo':
+            $dataset->editInfo();
+            break;
+        case 'add':
+            $dataset->add();
             break;
     }
 }

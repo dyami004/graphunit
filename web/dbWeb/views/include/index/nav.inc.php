@@ -28,7 +28,7 @@
     function logout() {
         $.ajax({
             type: "POST",
-            url: "actions/User.php",
+            url: "controllers/User.php",
             data: {
                 action: 'logout'
             },

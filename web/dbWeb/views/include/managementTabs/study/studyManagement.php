@@ -1,5 +1,5 @@
 <?php
-require './actions/Study.php';
+require './controllers/Study.php';
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -66,7 +66,7 @@ $result = $study->studyManagerView();
     function copy(name, path) {
         $.ajax({
             type: "POST",
-            url: "actions/Study.php",
+            url: "controllers/Study.php",
             data: {
                 action: 'copy',
                 userId: userId,
@@ -87,7 +87,7 @@ $result = $study->studyManagerView();
 //        function edit(id) {
 //            $.ajax({
 //                type: "POST",
-//                url: "actions/Dataset.php",
+//                url: "controllers/Dataset.php",
 //                data: {
 //                    action: 'edit',
 //                    userId: userId,
@@ -105,7 +105,7 @@ $result = $study->studyManagerView();
     function del(id) {
         $.ajax({
             type: "POST",
-            url: "actions/Study.php",
+            url: "controllers/Study.php",
             data: {
                 action: 'delete',
                 userId: userId,

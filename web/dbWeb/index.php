@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <?php
-        include './actions/Session.php';
+        include './controllers/Session.php';
         include './views/include/index/head.inc.php';
         include './views/include/index/bootstrap.inc.php';
         ?>
@@ -27,7 +27,7 @@
         </div>
 
         <?php
-        include './views/include/user/modalViews.inc.php';
+        include dirname(__FILE__). '/views/include/modalViews.inc.php';
         ?>
     </body>
 </html>

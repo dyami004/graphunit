@@ -1,5 +1,5 @@
 <?php
-require './actions/Viewer.php';
+require './controllers/Viewer.php';
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -17,7 +17,7 @@ $result = $viewer->viewerManagerView();
             </div>
             <div class="col-md-3">
             </div>
-            <button  class="btn btn-primary text-right" data-toggle="modal" data-target="#modalViewLogin">Add Viewer</button>
+            <button  class="btn btn-primary text-right" data-toggle="modal" data-target="#modalAddViewer">Add Viewer</button>
         </div>
     </div>
 
@@ -46,12 +46,11 @@ $result = $viewer->viewerManagerView();
                         ?>
                     </td>
                     <td class="text-right">
-                        <button type="button" class="btn btn-default btn-xs" onclick="copy('<?php echo $value['name']; ?>', '<?php echo $value['path']; ?>')">Copy</button>
+                        <button type="button" class="btn btn-default btn-xs" onclick="copyViewer('<?php echo $value['name']; ?>', '<?php echo $value['path'] ?>', '<?php echo $value['description']; ?>')">Copy</button>
                         <button type="button" class="btn btn-default btn-xs" data-toggle="modal" 
-                                data-dataset-id="<?php echo $value['id']; ?>" 
-                                data-dataset-name="<?php echo $value['name']; ?>" 
-                                data-target="#editDataset">Edit</button>
-                        <button type="button" class="btn btn-danger btn-xs" onclick="del(<?php echo $value['id']; ?>)">Delete</button>
+                                data-viewer-id="<?php echo $value['id']; ?>" 
+                                data-target="#editViewer">Edit</button>
+                        <button type="button" class="btn btn-danger btn-xs" onclick="delViewer(<?php echo $value['id']; ?>)">Delete</button>
                     </td>
                 </tr>
                 <?php
@@ -63,15 +62,16 @@ $result = $viewer->viewerManagerView();
 
 <script type="text/javascript">
     var userId = <?php echo $userId; ?>;
-    function copy(name, path) {
+    function copyViewer(name, path, description) {
         $.ajax({
             type: "POST",
-            url: "actions/Viewer.php",
+            url: "controllers/Viewer.php",
             data: {
                 action: 'copy',
                 userId: userId,
                 name: name,
-                path: path
+                path: path,
+                description: description
             },
             success: function (data)
             {
@@ -84,28 +84,10 @@ $result = $viewer->viewerManagerView();
         });
 
     }
-//        function edit(id) {
-//            $.ajax({
-//                type: "POST",
-//                url: "actions/Dataset.php",
-//                data: {
-//                    action: 'edit',
-//                    userId: userId,
-//                    id: id
-//                },
-//                success: function (data)
-//                {
-//                    if (data === "true") {
-//                    } else {
-//                        alert("There was an error, please try again.");
-//                    }
-//                }
-//            });
-//        }
-    function del(id) {
+    function delViewer(id) {
         $.ajax({
             type: "POST",
-            url: "actions/Viewer.php",
+            url: "controllers/Viewer.php",
             data: {
                 action: 'delete',
                 userId: userId,

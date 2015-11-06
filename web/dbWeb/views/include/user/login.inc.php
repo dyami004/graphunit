@@ -25,37 +25,35 @@
         e.preventDefault();
         $.ajax({
             type: "POST",
-            url: "actions/User.php",
+            url: "controllers/User.php",
             data: {
                 action: 'login',
                 email: $("#emailLogin").val(),
                 password: $("#passwordLogin").val()
             },
-            success: function (data)
+            success: function ()
             {
-                if (data === "true") {
-                    location.reload();
-                } else {
-                    alert("Email or Password was not found");
-                }
+                location.reload();
+            },
+            error: function () {
+                alert("Email or Password was not found");
             }
         });
     });
     function forgotPassword() {
         $.ajax({
             type: "POST",
-            url: "actions/User.php",
+            url: "controllers/User.php",
             data: {
                 action: 'forgot',
                 email: $("#emailLogin").val()
             },
-            success: function (data)
+            success: function ()
             {
-                if (data === "true") {
-                    location.reload();
-                } else {
-                    alert("Email is not registered");
-                }
+                location.reload();
+            },
+            error: function () {
+                alert("Email is not registered");
             }
         });
     }

@@ -74,6 +74,32 @@ class DatabaseManager {
 
         return $this->mysqli->query($sqlQuery);
     }
+    /**
+     * Update an existing item in the database
+     * 
+     * @param type $id int in the same order as the database
+     * @param type $fields Fields in same order as condition
+     * @param type $data Data to be inserted
+     * @return type If false, insert was unsuccessful
+     */
+    protected function update($id, $fields = array(), $data = array()) {
+        if (is_null($id)) {
+            return false;
+        }
+
+        $update = "`id`  = '".$id."' ";
+        foreach ($fields as $key => $current) {
+            if (!is_null($data[$key])) {
+                $update = $update . ", `".$current."` = '".$data[$key]."' ";
+            }
+        }
+        echo $update;
+        var_dump($update);
+
+        $sqlQuery = "UPDATE `" . $this->tableName . "` SET ".$update." WHERE `id` = ".$id;
+
+        return $this->mysqli->query($sqlQuery);
+    }
 
     /**
      * Return one or multiple items from the database

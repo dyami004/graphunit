@@ -2,7 +2,7 @@
 
 require_once '/DatabaseManager.php';
 
-require_once '/Session.php';
+require_once (dirname(__FILE__) .'/Session.php');
 
 class Dataset extends DatabaseManager {
     
@@ -23,7 +23,7 @@ class Dataset extends DatabaseManager {
      * Update when a database is changed
      * @var type Array
      */
-    private $fields = ['name', 'path', 'user_id'];
+    private $fields = ['name', 'path', 'user_id', 'description'];
 
     public function __construct($tableName, $userId) {
         parent::__construct($tableName);
@@ -58,11 +58,12 @@ class Dataset extends DatabaseManager {
     }
 
     /*
-     * Delete an existing dataset
+     * Edit an existing dataset
      */
 
     public function edit() {
-        $successful = $this->delete($_POST['id']);
+        $data = [$_POST['name'], null, $this->userId, isset($_POST['description']) ? $_POST['description'] : null];
+        $successful = $this->update($this->fields, $data);
 
         $result = true;
 
@@ -72,13 +73,43 @@ class Dataset extends DatabaseManager {
 
         echo json_encode($result);
     }
+    
+    /*
+     * Retrieve information to edit dataset
+     */
+    public function editInfo() {
+        $fields = ['id'];
+        $conditions = [$_POST['datasetId']];
+        $dataset = $this->select($fields, $conditions);
+
+        $data = array();
+        $data['name'] = $dataset[0]['name'];
+        $data['description'] = $dataset[0]['description'];
+        echo json_encode($data);
+    }
 
     /*
-     * Delete an existing dataset
+     * Copy an existing dataset
      */
 
     public function copy() {
-        $data = [$_POST['name'], $_POST['path'], $this->userId];
+        $data = [$_POST['name'], null, $this->userId, $_POST['description'] ? $_POST['description'] : null ];
+        $successful = $this->insert($this->fields, $data);
+
+        $result = true;
+
+        if (!$successful) {
+            $result = false;
+        }
+
+        echo json_encode($result);
+    }
+    /*
+     * Add a dataset
+     */
+
+    public function add() {
+        $data = [$_POST['name'], null, $this->userId, isset($_POST['description']) ? $_POST['description'] : null];
         $successful = $this->insert($this->fields, $data);
 
         $result = true;
@@ -91,7 +122,6 @@ class Dataset extends DatabaseManager {
     }
 
 }
-
 if(isset($_POST['action'])) {
     $dataset = new Dataset(Dataset::$tableName, $_POST['userId']);
     switch ($_POST['action']) {
@@ -103,6 +133,12 @@ if(isset($_POST['action'])) {
             break;
         case 'edit':
             $dataset->edit();
+            break;
+        case 'editInfo':
+            $dataset->editInfo();
+            break;
+        case 'add':
+            $dataset->add();
             break;
     }
 }

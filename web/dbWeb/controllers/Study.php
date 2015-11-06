@@ -23,7 +23,7 @@ class Study extends DatabaseManager {
      * Update when a database is changed
      * @var type Array
      */
-    private $fields = ['name', 'path', 'user_id'];
+    private $fields = ['name', 'path', 'user_id', 'description'];
 
     public function __construct($tableName, $userId) {
         parent::__construct($tableName);
