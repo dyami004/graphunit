@@ -93,8 +93,6 @@ class DatabaseManager {
                 $update = $update . ", `".$current."` = '".$data[$key]."' ";
             }
         }
-        echo $update;
-        var_dump($update);
 
         $sqlQuery = "UPDATE `" . $this->tableName . "` SET ".$update." WHERE `id` = ".$id;
 

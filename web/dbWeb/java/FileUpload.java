@@ -7,15 +7,12 @@
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Iterator;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
 import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
@@ -39,13 +36,13 @@ public class FileUpload extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
-            String studyname = request.getParameter("studyname");
+            String studyname = request.getParameter("viewer");
             String fileName = null;
             
-            String studyFolderPath = getServletContext().getRealPath("studies" +File.separator + studyname);
-            File studyFolder = new File(studyFolderPath);
+            String viewerFolderPath = getServletContext().getRealPath("viewers" +File.separator + studyname);
+            File studyFolder = new File(viewerFolderPath);
             
-            System.out.println("StudyFolder path:: "+studyFolderPath);
+            System.out.println("ViewerFolder path:: "+viewerFolderPath);
             //create the folder if it does not exist
             if(!studyFolder.exists()){
                 studyFolder.mkdir();

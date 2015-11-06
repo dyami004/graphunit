@@ -20,8 +20,9 @@
 </div>
 
 <script type="text/javascript">
+    var datasetId;
     $('#editDatasetOpen').click(function () {
-        var datasetId = $(this).data('dataset-id');
+         datasetId = $(this).data('dataset-id');
         $.ajax({
             type: "POST",
             url: "controllers/Dataset.php",
@@ -38,7 +39,7 @@
             }
         });
     });
-    
+
     $('#submitButtonEditDataset').click(function () {
         $.ajax({
             type: "POST",
@@ -47,9 +48,10 @@
                 action: 'edit',
                 userId: userId,
                 name: $("#nameEditDataset").val(),
+                datasetId: datasetId,
                 description: $("#descriptionEditDataset").val()
             },
-            success: function ()
+            success: function (data)
             {
                 location.reload();
             }

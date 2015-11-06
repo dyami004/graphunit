@@ -63,7 +63,7 @@ class Dataset extends DatabaseManager {
 
     public function edit() {
         $data = [$_POST['name'], null, $this->userId, isset($_POST['description']) ? $_POST['description'] : null];
-        $successful = $this->update($this->fields, $data);
+        $successful = $this->update($_POST['datasetId'], $this->fields, $data);
 
         $result = true;
 
@@ -118,7 +118,7 @@ class Dataset extends DatabaseManager {
             $result = false;
         }
 
-        echo json_encode($result);
+        echo json_encode("asdasd");
     }
 
 }

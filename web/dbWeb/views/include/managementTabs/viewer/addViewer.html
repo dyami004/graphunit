@@ -4,7 +4,7 @@
         <div class="row">
             <div class="form-group">
                 <label for="nameAddViewer">Viewer Name:</label>
-                <input name="nameAddViewer" type="text" class="form-control" id="name" />
+                <input name="nameAddViewer" type="text" class="form-control" id="nameAddViewer" />
             </div>
         </div>
         <div class="row">
@@ -13,6 +13,7 @@
                 <input name="descriptionAddViewer"  type="text" class="form-control " id="descriptionAddViewer" placeholder="Please enter a description" />
             </div>
         </div>
+        <input type="file" name="thefiles[]" id="thefiles" onchange="getUploadedFileNames(this)" multiple/> 
         <div class="form-group col-sm-offset-5">
             <button id="submitButtonAddViewer" type="submit" class="btn btn-primary">Add Viewer</button>
         </div>

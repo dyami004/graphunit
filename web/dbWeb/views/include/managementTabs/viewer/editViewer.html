@@ -20,8 +20,9 @@
 </div>
 
 <script type="text/javascript">
+    var viewerId;
     $('#editViewerOpen').click(function () {
-        var viewerId = $(this).data('viewer-id');
+        viewerId = $(this).data('viewer-id');
         $.ajax({
             type: "POST",
             url: "controllers/Viewer.php",
@@ -32,6 +33,7 @@
             },
             success: function (data)
             {
+                console.log(data);
                 data = JSON.parse(data);
                 $('#nameEditViewer').val(data.name);
                 $('#descriptionEditViewer').val(data.description);
@@ -44,8 +46,9 @@
             type: "POST",
             url: "controllers/Viewer.php",
             data: {
-                action: 'edit',
+                action: 'editViewer',
                 userId: userId,
+                viewerId: viewerId,
                 name: $("#nameEditViewer").val(),
                 description: $("#descriptionEditViewer").val()
             },

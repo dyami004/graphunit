@@ -64,7 +64,7 @@ class Viewer extends DatabaseManager {
 
     public function edit() {
         $data = [$_POST['name'], null, $this->userId, isset($_POST['description']) ? $_POST['description'] : null];
-        $successful = $this->update($this->fields, $data);
+        $successful = $this->update($_POST['viewerId'], $this->fields, $data);
 
         $result = true;
 
@@ -133,7 +133,7 @@ if(isset($_POST['action'])) {
         case 'copy':
             $viewer->copy();
             break;
-        case 'edit':
+        case 'editViewer':
             $viewer->edit();
             break;
         case 'editInfo':
